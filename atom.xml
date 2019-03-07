@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>施长成的博客</title>
+  
+  <subtitle>博客</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://blog.shicc.top/"/>
+  <updated>2019-03-07T11:08:03.917Z</updated>
+  <id>http://blog.shicc.top/</id>
+  
+  <author>
+    <name>shicc</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java Transient</title>
+    <link href="http://blog.shicc.top/Java%20Transient%20.html"/>
+    <id>http://blog.shicc.top/Java Transient .html</id>
+    <published>2019-03-07T10:58:42.000Z</published>
+    <updated>2019-03-07T11:08:03.917Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h2><p>我们的Java对象并不只是存在内存中，优势还需要在网络中传输，或保存到硬盘中再下次需要时再加载出来，所有我们需要使用到Java序列化技术。  </p><p>Java 序列化正是讲对象变成一串由二进制字符组成的数组，可以通过将二进制数据保存到磁盘或者传输网络，磁盘或者网络接收者可以在对象的属类的模版上来反序列化类的对象，以达到对象持久化的目的。</p><h2 id="Java-对象序列化方式"><a href="#Java-对象序列化方式" class="headerlink" title="Java 对象序列化方式"></a>Java 对象序列化方式</h2><p>在Java中有两种序列化的方式,Serializable 和 Externalizable,可能大部分人值知道Serializable而不知道Externalizable.  </p><p>这两种序列化方式的区别是：实现了Serializable接口是自动序列化的，实现Externalizable则需要手动序列化，通过 writeExternal 和readExternal 方式手动进行。</p><h2 id="transient-关键字总结"><a href="#transient-关键字总结" class="headerlink" title="transient 关键字总结"></a>transient 关键字总结</h2><ol><li>transient修饰的变量不能被序列化。</li><li>transient只作用域实现Serializable接口</li><li>transient只能用来修饰普通成员变量字段</li><li>不管有没有transient修饰，静态变量都不能序列化</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;序列化&quot;&gt;&lt;a href=&quot;#序列化&quot; class=&quot;headerlink&quot; title=&quot;序列化&quot;&gt;&lt;/a&gt;序列化&lt;/h2&gt;&lt;p&gt;我们的Java对象并不只是存在内存中，优势还需要在网络中传输，或保存到硬盘中再下次需要时再加载出来，所有我们需要使用到Java序列化
+      
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://blog.shicc.top/tags/Java/"/>
+    
+      <category term="Transient" scheme="http://blog.shicc.top/tags/Transient/"/>
+    
+      <category term="序列化" scheme="http://blog.shicc.top/tags/%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis集群搭建</title>
+    <link href="http://blog.shicc.top/Redis%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA.html"/>
+    <id>http://blog.shicc.top/Redis集群搭建.html</id>
+    <published>2019-01-17T14:01:16.000Z</published>
+    <updated>2019-01-17T14:09:11.480Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Redis-集群搭建"><a href="#Redis-集群搭建" class="headerlink" title="Redis 集群搭建"></a>Redis 集群搭建</h1><ol><li><p>Redis 关闭</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h ip -p port -a pwd shutdown</span><br></pre></td></tr></table></figure></li><li><p>取消所有Redis的密码设置</p></li><li><p>配置 dir ，若不配置dir，Redis启动时会根据当前执行目录生成相关数据和配置信息，不方便管理</p></li><li><p>启动所有的Redis实例</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server /midware/redis/cluster/7000/redis.conf  &amp;</span><br></pre></td></tr></table></figure></li><li><p>查询Redis集群状态</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CLUSTER INFO</span><br><span class="line"></span><br><span class="line">CLUSTER NODE</span><br></pre></td></tr></table></figure></li><li><p>构建集群</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis/bin/redis-trib.rb  create --replicas 1 10.10.118.37:7000 10.10.118.37:7001 10.10.118.38:7000 10.10.118.38:7001 10.10.118.39:7000 10.10.118.39:7001</span><br></pre></td></tr></table></figure></li><li><p>再次查询Redis集群状态</p></li><li><p>关闭所有Redis，重新设置密码，再启动</p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Redis-集群搭建&quot;&gt;&lt;a href=&quot;#Redis-集群搭建&quot; class=&quot;headerlink&quot; title=&quot;Redis 集群搭建&quot;&gt;&lt;/a&gt;Redis 集群搭建&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Redis 关闭&lt;/p&gt;
+&lt;figure class=&quot;h
+      
+    
+    </summary>
+    
+    
+      <category term="Redis" scheme="http://blog.shicc.top/tags/Redis/"/>
+    
+      <category term="集群" scheme="http://blog.shicc.top/tags/%E9%9B%86%E7%BE%A4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Liunx学习笔记</title>
+    <link href="http://blog.shicc.top/Liunx%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html"/>
+    <id>http://blog.shicc.top/Liunx学习笔记.html</id>
+    <published>2019-01-17T05:29:00.000Z</published>
+    <updated>2019-01-18T08:30:15.218Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Liunx-学习笔记"><a href="#Liunx-学习笔记" class="headerlink" title="Liunx 学习笔记"></a>Liunx 学习笔记</h1><h2 id="Liunx-目录介绍"><a href="#Liunx-目录介绍" class="headerlink" title="Liunx 目录介绍"></a>Liunx 目录介绍</h2><p>根目录<br>/bin : 包含二进制文件，即可执行程序，这些程序是系统必需的文件<br>/sbin : 也用于存储二进制文件，只有超级用户root才可以使用<br>/etc : 存放配置文件，如passwd,inittab等<br>/boot : 系统引导时使用的文件，系统中非常重要的内核 vmlinux 就放在该目录下面<br>/dev : 存放设备文件，用户可以通过这些文件访问外部设备<br>/lib : 存放程序运行时所需要的库文件<br>/temp : 存放各种临时文件<br>/mnt : 安装软盘，光盘，U盘的挂载点<br>/root : 超级用户的个人主目录<br>/usr : 该目录的空间比较大，用于安装各种应用程序<br>/proc : 是一个虚拟目录，存放当前内存的印象，有内核自动产生<br>/var : 存放一些会随时改变的文件  </p><h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><ol><li>挂载</li></ol><ul><li>Mount /dev/fd0 /mnt/floppy</li></ul><ol start="2"><li>卸载挂载</li></ol><ul><li>Umount /mnt/floppy</li></ul><ol start="3"><li>启动加载<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/fstab</span><br></pre></td></tr></table></figure></li></ol><p>## </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Liunx-学习笔记&quot;&gt;&lt;a href=&quot;#Liunx-学习笔记&quot; class=&quot;headerlink&quot; title=&quot;Liunx 学习笔记&quot;&gt;&lt;/a&gt;Liunx 学习笔记&lt;/h1&gt;&lt;h2 id=&quot;Liunx-目录介绍&quot;&gt;&lt;a href=&quot;#Liunx-目录介绍&quot;
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Boot 教程</title>
+    <link href="http://blog.shicc.top/Spring%20Boot%20%E6%95%99%E7%A8%8B.html"/>
+    <id>http://blog.shicc.top/Spring Boot 教程.html</id>
+    <published>2018-12-15T10:22:05.000Z</published>
+    <updated>2019-01-17T14:08:52.238Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h1><h2 id="Application事件和监听器"><a href="#Application事件和监听器" class="headerlink" title="Application事件和监听器"></a>Application事件和监听器</h2><p>除了常见的Spring 框架事件，比如ContextRefreshedEvent，SpringApplication 也会发送其他的application事件。</p><p>有些事件实际是在ApplicationContext 创建前触发的，所以你不能在这些事件(处理类)中通过@Bean注册监听器，只能通过<code>SpringApplication.addListeners(...)</code> 或者 <code>SpringApplicationBuilder.listeners(...)</code> 方法注册。 如果想让监听器自动注册，而不关心应用的创建方法，你可以在工程中添加一个<code>META-INF/spring.factories</code> 文件，并使用<code>org.springframework.context.ApplicationListener</code> 作为key 指向那些监听器，如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.context.ApplicationListener = com.example.project.MyListener</span><br></pre></td></tr></table></figure></p><p>应用运行时，事件会以下面的次序发送：</p><ol><li>在运行开始，但除了监听器注册或初始化以外的任务处理之前，会发送一个ApplicationStartedEvent.</li><li>在Environment将被用于已知的上下文，但在上下文被创建前，会发送一个<code>ApplicationEnvironmentPreparedEvent</code></li><li>在refresh开始前，但在bean定义已被加载后，会发送一个<code>ApplicationPreparedEvent</code>。</li><li>在refresh之后，相关的回调处理完成，会发送一个<code>ApplicationReadyEvent</code>表示应用准备好接受请求了。</li><li>启动过程如果出现异常，会发送一个<code>ApplicationFailedEvent</code>。</li><li></li></ol><h2 id="spring-factories-学习整理一下"><a href="#spring-factories-学习整理一下" class="headerlink" title="spring.factories(学习整理一下)"></a>spring.factories(学习整理一下)</h2><p>官方start格式：spring-boot-start-xxx<br>个人start格式：xxx-spring-boot-start</p><p>编写自定义的spring-boot-start 需要借助与 spring.factories,具体的 start 编写方式下方有说明。 </p><h2 id="java-comp-学习整理一下"><a href="#java-comp-学习整理一下" class="headerlink" title="java:comp (学习整理一下)"></a>java:comp (学习整理一下)</h2><h2 id="ConfigurationProperties"><a href="#ConfigurationProperties" class="headerlink" title="@ConfigurationProperties"></a>@ConfigurationProperties</h2><h3 id="Relaxed绑定"><a href="#Relaxed绑定" class="headerlink" title="Relaxed绑定"></a>Relaxed绑定</h3><p>Spring Boot 将<code>Environment</code> 属性绑定到<code>@ConfigurationProperties</code> beans 时会使用一些宽松的规格，所以<code>Environment</code>属性名和bean属性名不需要精确匹配。常见的示例中有用的包括虚线分割(比如：context-type 绑定到 contextPath)，将environment属性转为大写字母(比如， PORT 绑定到 <code>port</code>)</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@ConfigurationProperties(prefix=&quot;person&quot;)</span><br><span class="line">public class OwnerProperties &#123;</span><br><span class="line">    private String firstName;</span><br><span class="line">    public String getFirstName() &#123;</span><br><span class="line">        return this.firstName;</span><br><span class="line">    &#125;</span><br><span class="line">    public void setFirstName(String firstName) &#123;</span><br><span class="line">        this.firstName = firstName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>下面的属性名都能使用：</p><table><thead><tr><th>属性</th><th>说明</th></tr></thead><tbody><tr><td><code>person.firstName</code></td><td>标准驼峰规则</td></tr><tr><td><code>person.first-name</code></td><td>虚线表示，推荐用于 .properties 和 .yml文件中</td></tr><tr><td><code>person.first_name</code></td><td>下划线表示，用于 .properties 和 .yml 文件的可选格式</td></tr><tr><td><code>PERSON_FIRST_NAME</code></td><td>大写形式，使用系统环境变量时推荐</td></tr></tbody></table><h3 id="ConfigurationProperties-VS-Value"><a href="#ConfigurationProperties-VS-Value" class="headerlink" title="@ConfigurationProperties VS @Value"></a>@ConfigurationProperties VS @Value</h3><p><code>@Value</code> 是Spring 容器的一个核心特性，它没有提供跟 type-safe Configuration Properties 相同的特性。下面的表格总结了<code>@ConfigurationProperties</code> 和 <code>@Value</code> 支持的特性：</p><table><thead><tr><th>特性</th><th><code>@Configuration</code></th><th><code>@Value</code></th></tr></thead><tbody><tr><td>Relaxd绑定</td><td>Yes</td><td>NO</td></tr><tr><td>Meta-data支持</td><td>Yes</td><td>NO</td></tr><tr><td>SpEL 表达式</td><td>NO</td><td>Yes</td></tr></tbody></table><p>如果为自己的组件定义了一些列的keys，那么建议将他们以 <code>@ConfigurationProperties</code> 注解的POJO进行分组。由于 <code>@Value</code> 不支持relaxed绑定，所有如果你使用环境变量属性提供值得话，它就不是很好的选中。最后，尽管 <code>@Value</code> 可以<code>SpEL</code>表达式，但这些表达式不会出来来自<code>Application</code>的属性。</p><h2 id="自动配置-auto-configuration"><a href="#自动配置-auto-configuration" class="headerlink" title="自动配置 auto-configuration"></a>自动配置 auto-configuration</h2><p>从底层讲，自动配置（auto-configurtaion） 是通过标准的<code>@Configuration</code>类实现的。此外，<code>@Conditional</code> 注解用来约束自动配置生效的条件。通常自动配置类需要使用<code>@conditionOnClass</code>  和 <code>@ConditionOnMissingBean</code> 注解，这是为了确保只有在相关的类被发现及没有声明自定义的 <code>@Configuration</code> 时才应用自动配置，具体查看 <code>spring-boot-autofigure</code>源码中的 <code>@Configuration</code>类（<code>META-INF/spring.factories</code> 文件）</p><p>Spring Boot 会自动检查你发布的jar是否存在 <code>META-INF/spring.factories</code>文件，该文件中以<code>EnableAutoCOnfiguration</code> 为空key的属性应该列出你的配置类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\com.mycirp.libx.autoconfigure.LibXAutoConfiguration,\com.mycorp.libx.autoconfiguration.LibXWebAutoConfiguration</span><br></pre></td></tr></table></figure></p><p>可以使用 <code>@AutoConfigureAfter</code>或<code>@AutoConfigureBefore</code>注解为配置类指定特定的顺序。例如，你提供了web-specific 配置，你的类就需要应用在<code>WebMvcAutoConfiguration</code>后面。<br>也可以使用 <code>@AutoConfigureOrder</code> 注解为那些相互不知道存在的自动配置类提供排序，该注解语义跟常规的 <code>@Order</code> 注解相同，但专为自动配置提供顺序。</p><p><strong>注</strong> 自动配置类在只能通过这种方式加载，确保它们定义在一个特殊的package中，特别不能成为组件扫描的目标。</p><h3 id="条件注解"><a href="#条件注解" class="headerlink" title="条件注解"></a>条件注解</h3><p><code>@ConditionOnMissingBean</code> 注解是一个常见的示例，开发者可以用它覆盖自动配置类提供的默认行为。<br>Spring Boot 包含很多<code>@Conditonal</code>注解，你可以在自己的代码中通过注解<code>@Configuration</code>类或单独的<code>@Bean</code> 方法来重用它们。</p><h4 id="Class-条件"><a href="#Class-条件" class="headerlink" title="Class 条件"></a>Class 条件</h4><p><code>@ConditionalOnClass</code> 和 <code>@ConditionalOnMissingClass</code> 注解可以根据特定类是否出现来决定配置的包含，由于注解元数据是使用 ASM 来解析的，所以你可以使用 <code>value</code> 属性来引用真正的类，即使该类没有出现在运行的应用的classpath下，也可以使用<code>name</code>属性如果你倾向于使用字符串作为类型。 </p><h4 id="Bean-条件"><a href="#Bean-条件" class="headerlink" title="Bean 条件"></a>Bean 条件</h4><p><code>@ConditionalOnBean</code> 和 <code>@ConditionalOnMissingBean</code> 注解可以根据特定类是否存在决定bean的包含，你可以使用value属性指定beans(by type) ,也可以使用 name 定义beans (by name), search 属性用于限制搜索beans是需要考虑ApplicationContext层次。 </p><p><strong>注</strong> 需要注意bean自定义添加的顺序，因为这些条件的计算是基于目前处理内容的。出于这个原因，我们推荐在自动配置类中只使用 <code>@ConditionOnBean</code> 和 <code>@ConditionOnMissingBean</code> 注解（即使保证他们在其他用户定义的beans后面加载）</p><p><strong>注</strong> <code>@ConditionalOnBean</code> 和 <code>@ConditionalOnMissingBean</code> 不会阻止 @Configuration 类的创建，在类级别使用那些conditions跟使用注解标记每个@Bean方法是等价的。</p><h4 id="Property-条件"><a href="#Property-条件" class="headerlink" title="Property 条件"></a>Property 条件</h4><p><code>@ConditionalOnProperty</code>注解可以根据一个Spring <code>Environment</code> 属性来决定是否包含配置，使用 <code>prefix</code> 和 <code>name</code> 属性指定要检查的配置。默认情况下，任何存在的主要不是 <code>false</code> 的属性都会匹配，你也可以使用<code>havingValue</code> 和 <code>matchIfMissing</code>属性创建更高级的检测。</p><p><code>matchIfMissing</code> 当配置文件不存在 <code>prefix</code>.<code>name</code> 值是默认为true还是false，true任务匹配成功<br><code>havingValue</code> 是一个字符串 与 文件中配置的<code>prefix</code>.<code>name</code> 进行equal 比较</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@ConditionalOnProperty(prefix = &quot;example.service&quot;, value = &quot;enabled&quot;, matchIfMissing = true)，当配置文件中example.service.enabled=true时进行自动配置，如果没有设置此值就默认使用matchIfMissing对应的值</span><br></pre></td></tr></table></figure><h4 id="Resource条件"><a href="#Resource条件" class="headerlink" title="Resource条件"></a>Resource条件</h4><p><code>@ConditionalOnResource</code> 注解只在特定资源出现时才会包含配置，可以使用常见的Spring约定命名资源，例如<code>file://home/user/test.dat</code></p><h4 id="Web-Application条件"><a href="#Web-Application条件" class="headerlink" title="Web Application条件"></a>Web Application条件</h4><p><code>@ConditionalOnWebApplication</code> 和 <code>@ConditonalOnNotWebApplication</code> 注解可以根据应用是否为’web应用’来决定是否包含配置，web应用是任何使用Spring <code>WebApplicationContext</code>，定义一个 <code>session</code> 作用域，或有一个 <code>StandardServeltEnvironment</code>的应用。</p><h4 id="SpEL表达式条件"><a href="#SpEL表达式条件" class="headerlink" title="SpEL表达式条件"></a>SpEL表达式条件</h4><p><code>@ConditionalOnExpression</code> 注解可以根据SpEL表达式结果来决定是否包含配置。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Spring-Boot&quot;&gt;&lt;a href=&quot;#Spring-Boot&quot; class=&quot;headerlink&quot; title=&quot;Spring Boot&quot;&gt;&lt;/a&gt;Spring Boot&lt;/h1&gt;&lt;h2 id=&quot;Application事件和监听器&quot;&gt;&lt;a href=&quot;#
+      
+    
+    </summary>
+    
+    
+      <category term="Spring Boot" scheme="http://blog.shicc.top/tags/Spring-Boot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS SSH免密码登陆</title>
+    <link href="http://blog.shicc.top/CentOS%20SSH%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E9%99%86.html"/>
+    <id>http://blog.shicc.top/CentOS SSH免密码登陆.html</id>
+    <published>2018-12-13T10:22:05.000Z</published>
+    <updated>2019-01-17T14:08:52.231Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Centos-SSH免密码登陆"><a href="#Centos-SSH免密码登陆" class="headerlink" title="Centos SSH免密码登陆"></a>Centos SSH免密码登陆</h1><p>1.在客户机创建一对密钥文件,包括公钥文件(~/.ssh/id_rsa.pub),私钥文件(~/.ssh/id_rsa)</p><p>2.把公钥放到服务器上（~/.ssh/authorized_keys）,在使用ssh登录时，ssh程序会发送私钥去和服务器上的公钥做匹配。如果匹配成功就可以自动登录了。</p><h2 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h2><ol><li><p>修改sshd配置文件(/etc/ssh/sshd_config)</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PubkeyAuthentication yes</span><br></pre></td></tr></table></figure></li><li><p>配置authorized_keys文件<br>若 <code>~/.ssh/authorized_keys</code> 不存在,则建立.ssh文件夹和authorized_keys文件.</p></li><li><p>重启sshd</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /etc/init.d/sshd restart</span><br></pre></td></tr></table></figure></li></ol><h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>1) .ssh目录的权限必须是700<br>2) .ssh/authorized_keys文件权限必须是600 </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Centos-SSH免密码登陆&quot;&gt;&lt;a href=&quot;#Centos-SSH免密码登陆&quot; class=&quot;headerlink&quot; title=&quot;Centos SSH免密码登陆&quot;&gt;&lt;/a&gt;Centos SSH免密码登陆&lt;/h1&gt;&lt;p&gt;1.在客户机创建一对密钥文件,包括公
+      
+    
+    </summary>
+    
+    
+      <category term="CentOS" scheme="http://blog.shicc.top/tags/CentOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS下Redis安装</title>
+    <link href="http://blog.shicc.top/Centos%20Reids%20%E5%AE%89%E8%A3%85.html"/>
+    <id>http://blog.shicc.top/Centos Reids 安装.html</id>
+    <published>2018-12-03T10:22:05.000Z</published>
+    <updated>2018-12-03T11:08:50.229Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Redis-版本号约定"><a href="#Redis-版本号约定" class="headerlink" title="Redis 版本号约定"></a>Redis 版本号约定</h3><p>安装Redis需要知道自己需要哪个版本，有针对性的安装，比如如果需要redis GEO这个地理集合的特性，那么redis版本就不能低于3.2版本，由于这个特性是3.2版本才有的。另外需要注意的是，Redis约定次版本号（即第一个小数点后的数字）为偶数的版本是稳定版（如2.8版、3.0版），奇数版本是非稳定版（如2.7版、2.9版），生产环境下一般需要使用稳定版本。</p><h3 id="下载安装包"><a href="#下载安装包" class="headerlink" title="下载安装包"></a>下载安装包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://download.redis.io/releases/redis-4.0.2.tar.gz</span><br></pre></td></tr></table></figure><p>可从<code>http://download.redis.io/releases/</code>查询自己所需要的版本。</p><h3 id="解压安装包并下载"><a href="#解压安装包并下载" class="headerlink" title="解压安装包并下载"></a>解压安装包并下载</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf redis-4.0.2.tar.gz</span><br><span class="line">cd redis-4.0.2</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure><h3 id="Redis-启动"><a href="#Redis-启动" class="headerlink" title="Redis 启动"></a>Redis 启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis-server ./redis.conf</span><br></pre></td></tr></table></figure><p>通过参数<code>daemonize</code>设置redis后台启动</p><h3 id="Redis-关闭"><a href="#Redis-关闭" class="headerlink" title="Redis 关闭"></a>Redis 关闭</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli SHUTDOWN</span><br></pre></td></tr></table></figure><p>或者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -9 进程号</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;Redis-版本号约定&quot;&gt;&lt;a href=&quot;#Redis-版本号约定&quot; class=&quot;headerlink&quot; title=&quot;Redis 版本号约定&quot;&gt;&lt;/a&gt;Redis 版本号约定&lt;/h3&gt;&lt;p&gt;安装Redis需要知道自己需要哪个版本，有针对性的安装，比如如果需要
+      
+    
+    </summary>
+    
+    
+      <category term="CentOS" scheme="http://blog.shicc.top/tags/CentOS/"/>
+    
+      <category term="Redis" scheme="http://blog.shicc.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Socket 长连接</title>
+    <link href="http://blog.shicc.top/Java-Socket-%E9%95%BF%E8%BF%9E%E6%8E%A5.html"/>
+    <id>http://blog.shicc.top/Java-Socket-长连接.html</id>
+    <published>2018-12-03T10:22:05.000Z</published>
+    <updated>2018-12-03T11:01:50.259Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近再做根据 Cmpp 协议对接一个短信网关接口。<br>考虑到需要频繁的与网关服务器进行数据交互，因此使用长连接。</p><h2 id="如何区分长连接-短连接"><a href="#如何区分长连接-短连接" class="headerlink" title="如何区分长连接,短连接 ?"></a>如何区分长连接,短连接 ?</h2><p>所谓短连接就是建立一次tcp握手成功后进行数据交互，交互完成主动或者关闭tcp。 主动关闭 一般就是关闭socket或者关闭socket的 in ou流。被动关闭会受限操作系统的配置。比如建立tcp成功之后的一段时间若无数据交互，则操作系统会主动关闭这次tcp连接。</p><p>长连接，其实就是就是在建立一次tcp成功之后，通过一定的心跳机制来保证tcp链路一直建立而不释放。具体的长连接也需要Server的支持。</p><p>Java Socket 长连接</p><ol><li>创建一个Socket<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Socket msgSocket = new Socket();</span><br><span class="line">SocketAddress socAddress = new InetSocketAddress(msgConfig.getIsmgIp(), msgConfig.getIsmgPort());</span><br><span class="line">SocketAddress locAddress = new InetSocketAddress(InetAddress.getLocalHost(), msgConfig.getIsLocalPort());</span><br><span class="line">msgSocket.bind(locAddress);</span><br><span class="line">msgSocket.connect(socAddress, SOCKET_TIME_OUT);</span><br></pre></td></tr></table></figure></li></ol><p>创建客户端socket 有多种方式，最常用的方式为<code>Socket msgSocket = new Socket(msgConfig.getIsmgIp(), msgConfig.getIsmgPort(), InetAddress.getLocalHost(), msgConfig.getIsLocalPort());</code>,但通过这个方式我发现 Socket 会自动关闭。 后来尝试使用上面的方法创建一个Socket 并通过 connect 设置超时时间，然后在超时时间内进行一次心跳交互，可以达到http长连接。</p><h2 id="如何判断是否为长连接"><a href="#如何判断是否为长连接" class="headerlink" title="如何判断是否为长连接"></a>如何判断是否为长连接</h2><p>若http协议可以根据http head 中的 keep-alive 判断是否为长连接。<br>对于tcp或者socket，我们再与服务器建立长连接时会开辟一个端口，数据会通过这个端口与服务器进行数据交互，因此我们可以监控这个端口，查看这个端口的状态。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lsof -i: port</span><br><span class="line"></span><br><span class="line">java    2240 root  154u  IPv4 205709      0t0  TCP xxx:port-&gt; remote_ip:remote_ip (ESTABLISHED)</span><br></pre></td></tr></table></figure></p><h2 id="TCP-端口说明"><a href="#TCP-端口说明" class="headerlink" title="TCP 端口说明"></a>TCP 端口说明</h2><p>TCP 协议规定，对于已经建立的连接，网络双方要进行四次握手才能断开成功，如果缺少了其中某个步骤，将会使连接处于假死状态，连接本身占用的资源也不会被释放。<strong>CLOSE_WAIT 和 TIME_WAIT </strong> 这两个TCP状态值得我们关注一下</p><ol><li><p>LISTENING 状态<br>FTP 服务启动后会处于侦听(LISTENING) 状态</p></li><li><p>ESTABLISTENED 状态<br>ESTABLISTENED的意思是建立连接，表示两台机器正在通信</p></li><li><p>CLOSE_WAIT<br>对方主动关闭连接或者网络异常导致连接中断，这是我方的状态会变成CLOSE_WAIT,此时我方要调用 close() 来使得连接正确关闭。</p></li><li><p>TIME_WAIT<br>我方主动调用 close() 断开连接，收到对方确认后状态会变为 TIME_WAIT。TCP 协议规定TIME_WAIT状态会一直持续2MSL(即两倍的分段最大生存期)，以此来确保旧的连接状态不会对新连接产生影响。处于TIME_WAIT 状态的连接占用资源不会被内存释放，所以作为服务器，再可能的情下，尽量不要主动断开连接，减少TIME_WAIT状态造成的资源浪费。</p></li><li><p>SYN_SENT 状态<br>SYN_SENT 状态表示请求连接，当你要访问其他的计算机的服务时首先要发个同步信号给该端口，此时的状态为SYN_SENT，如果连接成功了就变成 ESTABLISTENED,此时SYN_SENT状态非常短暂。</p></li></ol><p>根据TCP协议定义的3次握手断开连接规定,发起socket主动关闭的一方 socket将进入TIME_WAIT状态,TIME_WAIT状态将持续2个MSL(Max Segment Lifetime),在Windows下默认为4分钟,即240秒,TIME_WAIT状态下的socket不能被回收使用. 具体现象是对于一个处理大量短连接的服务器,如果是由服务器主动关闭客户端的连接,将导致服务器端存在大量的处于TIME_WAIT状态的socket, 甚至比处于Established状态下的socket多的多,严重影响服务器的处理能力,甚至耗尽可用的socket,停止服务. TIME_WAIT是TCP协议用以保证被重新分配的socket不会受到之前残留的延迟重发报文影响的机制,是必要的逻辑保证.</p><h2 id="常用tcp命令"><a href="#常用tcp命令" class="headerlink" title="常用tcp命令"></a>常用tcp命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">netstat </span><br><span class="line"></span><br><span class="line">netstat -n | awk &apos;/^tcp/ &#123;++S[$NF]&#125; END &#123;for(a in S) print a, S[a]&#125;&apos;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;最近再做根据 Cmpp 协议对接一个短信网关接口。&lt;br&gt;考虑到需要频繁的与网关服务器进行数据交互，因此使用长连接。&lt;/p&gt;
+&lt;h2 id=&quot;如何区分长连接-短连接&quot;&gt;&lt;a href=&quot;#如何区分长连接-短连接&quot; class=&quot;headerlink&quot; title=&quot;如何区分
+      
+    
+    </summary>
+    
+    
+      <category term="长连接" scheme="http://blog.shicc.top/tags/%E9%95%BF%E8%BF%9E%E6%8E%A5/"/>
+    
+      <category term="TCP/IP" scheme="http://blog.shicc.top/tags/TCP-IP/"/>
+    
+      <category term="socket" scheme="http://blog.shicc.top/tags/socket/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Log4j MDC</title>
+    <link href="http://blog.shicc.top/Log4j-MDC.html"/>
+    <id>http://blog.shicc.top/Log4j-MDC.html</id>
+    <published>2018-11-22T05:11:22.000Z</published>
+    <updated>2018-12-03T10:19:55.663Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Log4j-MDC"><a href="#Log4j-MDC" class="headerlink" title="Log4j MDC"></a>Log4j MDC</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>在项目中需要分类收集处理日志信息，使用log4j的MDC线程中添加分类信息。不过最近却出现信息记录错误的情况，具体来说就是会出现本来属于下一个分类的一部分信息莫名的记录到上一个分类的日志文件中了。</p><h2 id="问题原因分析"><a href="#问题原因分析" class="headerlink" title="问题原因分析"></a>问题原因分析</h2><p>MDC 需要在完成后被重置，或者说清空。因为MDC是绑定线程的，所以，在大多数简单的使用的情况下，例如在服务器端接受请求的入口处，设置一个MDC信息，如果服务器这个程序任务的程序结束后会被丢弃，那么也不会出现什么问题，但是如果是一个线程池，池的线程会被重复利用的情况下，如果你没有结束后清楚MDC的信息，那么在下次设置之前，上次设置以后的这段日志，就会出现数据错乱的情况。</p><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>在log4j 1.2.16以后的版本，MDC直接提供了<code>clear()</code> 方法即：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MDC.clear()</span><br></pre></td></tr></table></figure></p><p>或者手动清理MDC<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MDC.getContext().clear();</span><br><span class="line">// 需要校验一下MDC.getContext() 不为null</span><br></pre></td></tr></table></figure></p><h2 id="tip"><a href="#tip" class="headerlink" title="tip"></a>tip</h2><p>当我们在项目中使用 <code>ThreadLocal</code> 时，在一个线程结束时也需要清空 <code>ThreadLocal</code>中的数据，否则也可能会出现上述情况。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Log4j-MDC&quot;&gt;&lt;a href=&quot;#Log4j-MDC&quot; class=&quot;headerlink&quot; title=&quot;Log4j MDC&quot;&gt;&lt;/a&gt;Log4j MDC&lt;/h1&gt;&lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; 
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Redlock实现分布式锁</title>
+    <link href="http://blog.shicc.top/Redlock%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81.html"/>
+    <id>http://blog.shicc.top/Redlock实现分布式锁.html</id>
+    <published>2018-11-11T02:41:34.000Z</published>
+    <updated>2018-12-03T10:19:55.664Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL 安装</title>
+    <link href="http://blog.shicc.top/MySQL%20%E5%AE%89%E8%A3%85.html"/>
+    <id>http://blog.shicc.top/MySQL 安装.html</id>
+    <published>2018-09-06T03:37:01.000Z</published>
+    <updated>2018-12-03T10:19:55.664Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="MySQL-安装"><a href="#MySQL-安装" class="headerlink" title="MySQL 安装"></a>MySQL 安装</h1><p>Windons 下MySQL的安装方式一般分为两种，一种基于 Exe 可执行文件的安装，另外一种是解压安装。</p><h2 id="解压安装"><a href="#解压安装" class="headerlink" title="解压安装"></a>解压安装</h2><p>将下载下来的mysql进行zip解压。</p><p>复制 my-default.ini 并改名为 my.ini，新建 data 和 log 两个文件夹看一个保存数据，一个保存log。</p><p>修改 my.ini 下的文件内容</p><p>执行 <code>mysqld.exe install mysql</code> 将mysql注册到window service 中</p><p>执行 <code>mysqld --initialize --console</code> 初始化mysql data，并在控制台输出默认密码</p><p>执行 <code>net start mysql</code> 启动mysql</p><p>使用初始密码进入mysql</p><p>执行 <code>set password = PASSWorD(&quot;Admin123456&quot;)</code> 修改 mysql root 用户的密码</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;MySQL-安装&quot;&gt;&lt;a href=&quot;#MySQL-安装&quot; class=&quot;headerlink&quot; title=&quot;MySQL 安装&quot;&gt;&lt;/a&gt;MySQL 安装&lt;/h1&gt;&lt;p&gt;Windons 下MySQL的安装方式一般分为两种，一种基于 Exe 可执行文件的安装，另外
+      
+    
+    </summary>
+    
+    
+      <category term="MySQL" scheme="http://blog.shicc.top/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GC 优化</title>
+    <link href="http://blog.shicc.top/GC%20%E4%BC%98%E5%8C%96.html"/>
+    <id>http://blog.shicc.top/GC 优化.html</id>
+    <published>2018-09-05T06:09:40.000Z</published>
+    <updated>2018-12-03T10:19:55.661Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="GC-优化"><a href="#GC-优化" class="headerlink" title="GC 优化"></a>GC 优化</h1><h2 id="JVM监控可以使用以下衡量标准"><a href="#JVM监控可以使用以下衡量标准" class="headerlink" title="JVM监控可以使用以下衡量标准"></a>JVM监控可以使用以下衡量标准</h2><ol><li>总内存使用情况（MB）：即JVM使用的总内存。如果JVM使用了所有可用内存，这项指标可以衡量底层操作系统的整体性能。</li><li>堆内存使用（MB）：即JVM为运行的Java应用所使用的对象分配的所有内存。不使用的对象通常会被垃圾回收器从堆中移除。所以，如果这个指数增大，表示你的应用没有把不使用的对象移除或者你需要更好的配置垃圾回收器的参数。</li><li>非堆内存的使用（MB）：即为方法区和代码缓存分配的所有内存。方法区是用于存储被加载的类的引用，如果这些引用没有被适当的清理，永生代池会在每次应用被重新部署的时候都会增大，导致非堆的内存泄露。这个指标也可能指示了线程创建的泄露。</li><li>池内总内存（MB）：即JVM所分配的所有变量内存池的内存和（即除了代码缓存区外的所有内存和）。这个指标能够让你明确你的应用在JVM过载前所能使用的总内存。</li><li>线程：即所有有效线程数。举个例子，在Tomcat服务器中每个请求都是一个独立的线程来处理，所以这个衡量指标可以表示当前有多少个请求数，是否影响到了后台低权限的线程的运行。</li><li>类：即所有被加载的类的总数。如果你的应用动态的创建很多类，这可能是内存泄露的一个原因。</li></ol><h2 id="GC-优化的目的："><a href="#GC-优化的目的：" class="headerlink" title="GC 优化的目的："></a>GC 优化的目的：</h2><ol><li>将老年代的对象数量将至最低</li><li>减少Full GC 的执行时间</li></ol><p>老年代GC相对于新生代GC更耗时</p><p>Full GC 的执行时间币 Minor GC 要长的多</p><p>老年代空间过小会导致 Full GC 频率增加或者 内存溢出<br>老年代空间过大会导致 Full GC 时间过长</p><h2 id="GC-监控工具-jstat-和-HPJMeter"><a href="#GC-监控工具-jstat-和-HPJMeter" class="headerlink" title="GC 监控工具 jstat 和 HPJMeter"></a>GC 监控工具 jstat 和 HPJMeter</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstat -gcutil</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jstat -gccapacity # 检查内存用量情况</span><br><span class="line"></span><br><span class="line">NGCMN NGCMX NGC S0C S1C EC OGCMN OGCMX OGC OC PGCMN PGCMX PGC PC YGC FGC</span><br><span class="line">212992.0 212992.0 212992.0 21248.0 21248.0 170496.0 1884160.0 1884160.0 1884160.0 1884160.0 262144.0 262144.0 262144.0 262144.0 54 5</span><br></pre></td></tr></table></figure><p>堆内存分配 </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Xms -Xmx</span><br></pre></td></tr></table></figure><p>非堆内存分配<br>永久保存的区域， 用于存放Class和Meta信息，Class在被Load的时候被放入该区域。</p><h3 id="三种内存溢出异常"><a href="#三种内存溢出异常" class="headerlink" title="三种内存溢出异常"></a>三种内存溢出异常</h3><ol><li>OutOfMemoryError: Java heap space 堆溢出<br>内存溢出主要存在的问题就是出现在这个情况中。当在JVM中如果98%的时间是用于GS切可以用的Heap size 不足2%的时候将抛出此异常信息</li><li>OutOfMemoryError: PermGen space 非堆溢出(永久保存区域溢出)<br> 这种错误常见在web服务器对jsp进行 pre compile 的时候。如果你的WEB APP 下毒用了大量第三方jar，其大小超过了jvm默认的大小(4M) 那么就会产生此错误信息。 如果web app 用了大量的第三方jar或者应用有太多的class文件而恰好MaxPermSize设置较小，超出了也会导致这块内存的占用过多造成溢出，或者 tomcat 热部署时不清除前面加载的环境，只会将 context 更改为新部署的，非堆存的内容就越来越多。</li><li>OutOfMemoryError: unable to create new native thread 无法创建新的线程<br> 这种现象比较少见，也比较奇怪，主要和jvm与系统内存的比例有关，这种怪事是因为jvm已经被系统分配了大量的内存，并且它至少要占用可用内存的一半。</li></ol><p>Java Heap 分为3个区：</p><ol><li>Young</li><li>Old</li><li>Permanent</li></ol><p>Jvm 有2个GC线程：<br>第一个线程负责回收Heap的Young区<br>第二个线程在Heap不足时，遍历Heap，将Young区升级为Older区，Older区的大小等于 -Xmx 减去  -Xmn,不能将-Xms的值设的过大，因为第二个线程被迫运行会降低 JVM 的性能</p><h3 id="GC-优化的经验之谈"><a href="#GC-优化的经验之谈" class="headerlink" title="GC 优化的经验之谈"></a>GC 优化的经验之谈</h3><ol><li>JVM 最好将 -Xms 和 -Xmx 设为相同的值。为了优化GC，最好让 -Xmn值约等于-Xmx 的 1/3 .</li><li>一个 GUI 程序最好是每 10到20秒间执行一个GC，每次在半秒之内完成</li></ol><h2 id="GC-分析"><a href="#GC-分析" class="headerlink" title="GC 分析"></a>GC 分析</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ps -ef|grep java #获取进程号</span><br><span class="line"></span><br><span class="line">jstat -gc 进程号</span><br><span class="line"></span><br><span class="line"># 间隔固定时间打印</span><br><span class="line">jstat -gc 进程号 2000 20 # 每隔2000ms输出该进程的gc情况，一共输出20此</span><br></pre></td></tr></table></figure><h3 id="GC-参数"><a href="#GC-参数" class="headerlink" title="GC 参数"></a>GC 参数</h3><ul><li><code>-XX:+PrintGC</code> 输出GC日志</li><li><code>-XX:+PrintGCDetails</code> 输出GC的详细日志</li><li><code>-XX:+PrintGCTimeStamps</code> 输出GC的时间戳（以基准时间的形式）</li><li><code>-XX:+PrintGCDateStamps</code> 输出GC的时间戳（以日期的形式，如年月日）</li><li><code>-XX:+PrintHeapAtGC</code> 在进行GC的前后打印出堆的信息</li><li><code>-Xloggc:../logs/gc.log</code> 日志文件的输出路径</li></ul><p>Tomcat 设置示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">JAVA_OPTS=&quot;-server -Xms2000m -Xmx2000m -Xmn800m -XX:PermSize=64m -XX:MaxPermSize=256m -XX:SurvivorRatio=4</span><br><span class="line">-verbose:gc -Xloggc:$CATALINA_HOME/logs/gc.log </span><br><span class="line">-Djava.awt.headless=true </span><br><span class="line">-XX:+PrintGCTimeStamps -XX:+PrintGCDetails </span><br><span class="line">-Dsun.rmi.dgc.server.gcInterval=600000 -Dsun.rmi.dgc.client.gcInterval=600000</span><br><span class="line">-XX:+UseConcMarkSweepGC -XX:MaxTenuringThreshold=15&quot;</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;GC-优化&quot;&gt;&lt;a href=&quot;#GC-优化&quot; class=&quot;headerlink&quot; title=&quot;GC 优化&quot;&gt;&lt;/a&gt;GC 优化&lt;/h1&gt;&lt;h2 id=&quot;JVM监控可以使用以下衡量标准&quot;&gt;&lt;a href=&quot;#JVM监控可以使用以下衡量标准&quot; class=&quot;he
+      
+    
+    </summary>
+    
+    
+      <category term="GC" scheme="http://blog.shicc.top/tags/GC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Unix IO</title>
+    <link href="http://blog.shicc.top/Unix%20IO.html"/>
+    <id>http://blog.shicc.top/Unix IO.html</id>
+    <published>2018-08-09T02:27:50.000Z</published>
+    <updated>2018-12-03T10:19:55.670Z</updated>
+    
+    <content type="html"><![CDATA[<p>一个 Linux 文件就是一个 m个字节的序列。<br>所有的I/O设备（例如网络、磁盘和终端）都被模型化为文件，而所有的输入和输出都被当作对相应文件的读和写来执行。这种将设备优雅地映射为文件的方式，允许Liunx内核引出一个简单、低级的应用接口，称为 Unix I/O ，这使得所有的输入和输出都能以一种统一且一致的方式来执行：</p><ul><li>打开文件。一个应用程序通过要求内核打开相应的文件，来宣告它想要访问一个I/O设备。内核返回一个小的非负整数，叫做描述符，它在后续对此文件的所有操作中标识这个文件。内核记录有关这个打开文件的所有信息。应用程序只需要记住这个描述符。</li><li>Liunx shell 创建的每个进程开始时都有三个打开的文件：标准输入(描述符为0)、标准输出(描述符为1)和标准错误(描述符为2)。</li><li>改变当前文件的文件位置。对于每个打开的文件，内核保持这一个文件位置k，初始为0.这个文件位置是从文件开头开始的字节偏移量。应用程序能够通过执行 seek操作，显式地设置文件的当前位置为k。</li><li>读写文件。一个读操作就是从文件复制 n&gt;0 个字节到内存。从当前文件位置k开始，然后将k添加到k+n。给定一个大小为m字节的文件，当k&gt;=m 时执行行读写操作会触发一个称为 end-of-file(EOF)的条件，应用程序能检测到这个条件。在文件结尾处并没有明确的”EOF符号”。<br>  类似地，写操作就是从内存复制 n&gt;0 个字节到一个文件，从当前文件位置k开始，然后更新k。</li><li>关闭文件。当应用完成了对文件的访问之后，它就通知内核关闭这个文件。作为响应，内核释放文件打开时创建的数据结构，并将这个描述符恢复到可用的描述符池中。无论一个进程因为何中原因终止时，内核都会关闭所有打开的文件并释放它们的内存资源。</li></ul><p>每个Liunx文件都有一个类型（type）来表明它在系统中的角色：</p><ul><li>普通文件</li><li>目录</li><li>套接字(socket) 是用来与另外一个进行跨网络通信的文件。</li><li>命名通道</li><li>符号链接</li><li>字符</li><li>块设备</li></ul><h2 id="存储单位"><a href="#存储单位" class="headerlink" title="存储单位"></a>存储单位</h2><p>二进制序列用以表示计算机、电子信息数据容量的量纲，基本单位为字节B，字节向上分别为KB、MB、GB、TB，每级为前一级的1024倍，比如1KB=1024B,1M=1024KB.<br>位 bit(比特)：存放一个二进制数，即0或1，最小的存储单位。英文缩写：b(固定小写)<br>字节byte：8个二进制位为一个字节(B),最常用的单位。  </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;一个 Linux 文件就是一个 m个字节的序列。&lt;br&gt;所有的I/O设备（例如网络、磁盘和终端）都被模型化为文件，而所有的输入和输出都被当作对相应文件的读和写来执行。这种将设备优雅地映射为文件的方式，允许Liunx内核引出一个简单、低级的应用接口，称为 Unix I/O ，
+      
+    
+    </summary>
+    
+    
+      <category term="Unix IO" scheme="http://blog.shicc.top/tags/Unix-IO/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx负载均衡策略</title>
+    <link href="http://blog.shicc.top/nginx-%E8%B4%9F%E8%BD%BD%E7%AD%96%E7%95%A5.html"/>
+    <id>http://blog.shicc.top/nginx-负载策略.html</id>
+    <published>2018-08-08T02:43:05.000Z</published>
+    <updated>2018-12-03T10:19:55.675Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Nginx负载均衡策略"><a href="#Nginx负载均衡策略" class="headerlink" title="Nginx负载均衡策略"></a>Nginx负载均衡策略</h2><h3 id="轮询（默认）"><a href="#轮询（默认）" class="headerlink" title="轮询（默认）"></a>轮询（默认）</h3><p>每个web请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">upstream nginxDemo&#123;</span><br><span class="line">server 127.0.0.1:8081;</span><br><span class="line">server 127.0.0.1:8082;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><h3 id="最少链接"><a href="#最少链接" class="headerlink" title="最少链接"></a>最少链接</h3><p>web 请求会被转发到连接数最少的服务器上。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">least_conn;</span><br><span class="line">server 127.0.0.1:8081;</span><br><span class="line">server 127.0.0.1:8082;</span><br></pre></td></tr></table></figure></p><h3 id="weight-权重"><a href="#weight-权重" class="headerlink" title="weight 权重"></a>weight 权重</h3><p>指定轮询几率，weight和访问比率成正比，weight默认是1。<br>服务器A和服务器B的访问比例为：2-1，比如有3个请求，前两个会访问A，第三个访问B，其他的规则和轮询一样。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">upstream nginxDemo&#123;</span><br><span class="line">server 127.0.0.1:8081 weight=2;</span><br><span class="line">server 127.0.0.1:8082;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><h3 id="ip-hash"><a href="#ip-hash" class="headerlink" title="ip_hash"></a>ip_hash</h3><p>每个请求按访问ip的hash值分配，这样客户端连续的Web请求都会被分配到同一服务器进行处理，可以解决session的问题。当后台服务器宕机时，会自动跳转到其他服务器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream nginxDemo&#123;</span><br><span class="line">ip_hash;</span><br><span class="line">server 127.0.0.1:8081 weight=2;</span><br><span class="line">server 127.0.0.1:8082 ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>基于weight的负载均衡和基于 ip_hash 的负载均衡器可以组合在一起使用。</p><h3 id="url-hash-第三方"><a href="#url-hash-第三方" class="headerlink" title="url_hash(第三方)"></a>url_hash(第三方)</h3><p>url_hash 是nginx的第三方模块，nginx本身不支持，需要引入第三方组件。<br>nginx 按访问 url 的hash 结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存服务器，文件服务器，静态资源服务器时比较有效。<br>缺点：当后端服务器宕机时，url_hash 不会自动跳转到其他缓存服务器，而返回给用于一个503错误。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream nginxDemo&#123;</span><br><span class="line">server 127.0.0.1:8081;</span><br><span class="line">server 127.0.0.1:8082;</span><br><span class="line">hash $request_url</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="fair-第三方"><a href="#fair-第三方" class="headerlink" title="fair(第三方)"></a>fair(第三方)</h3><p>按后端服务器的响应时间来分配请求，响应时间短的优先分配<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream nginxDemo&#123;</span><br><span class="line">server 127.0.0.1:8081;</span><br><span class="line">server 127.0.0.1:8082;</span><br><span class="line">fair;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><h2 id="负载均衡后-Session-管理"><a href="#负载均衡后-Session-管理" class="headerlink" title="负载均衡后 Session 管理"></a>负载均衡后 Session 管理</h2><ol><li><p>tomcat<br>tomcat 本身已支持该功能。但这种处理方式，不建议在大的集群中使用。<br>tomcat 的会话复制为两种：  </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Manager className=&quot;org.apache.catalina.ha.session.BackupManager&quot; expireSessionsOnshutdown=&quot;false&quot; notifyListenersOnReplication=&quot;true&quot; mapSendOptions=&quot;6&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;Manager className=&quot;org.apache.catalina.ha.session.DeltaManager&quot; expireSessionsOnshutdown=&quot;false&quot; notifyListenersOnReplication=&quot;true&quot; mapSendOptions=&quot;6&quot;&gt;</span><br></pre></td></tr></table></figure><p> 全局复制(DeltaManager):复制会话中的变更信息到集群中的所有其他节点。<br> 非全局复制(BackupManger):它会吧session复制给一个指定的备份节点。</p></li><li><p>Session 共享<br>session共享的实现方式有很多种，比人们 memcached，Redis，DB等。其核心思想是修改 tomcat 的session存储机制，使之能够session序列化，然后存放到memcached中。<br>实现方式： Tomcat+Nginx+MSM+memcached</p><ol><li><p>相关jar包放到tomcat/lib目录下：<br>Java memcached客户端：spymemcached.jar<br>MSM：</p><ol><li>核心包，memcached-session-manager-{version}.jar</li><li>Tomcat版本对应的jar包：memcached-session-manager-tc{tomcat-version}-{version}.jar<br>序列化工具包：可选kryo（据说效率比较快），javolution，xstream等，不设置时使用jdk默认序列化。</li></ol></li><li><p>Tomcat文件tomcatconfcontext.xml添加：  </p><ul><li><p>黏性处理方式：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Manager className=&quot;de.javakaffee.web.msm.MemcachedBackupSessionManager&quot; memcachedNodes=&quot;n1:192.168.2.61:11211,n2:192.168.2.66:11211&quot; requestUriIgnorePattern=&quot;.*.(ico|png|gif|jpg|css|js)$&quot;</span><br><span class="line">transcoderFactoryClass=&quot;de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory&quot;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure></li><li><p>非黏性处理方式：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Manager className=&quot;de.javakaffee.web.msm.MemcachedBackupSessionManager&quot; memcachedNodes=&quot;n1:192.168.2.61:11211,n2:192.168.2.66:11211&quot; sticky=&quot;false&quot; lockingMode=&quot;auto&quot; requestUriIgnorePattern=&quot;.*.(ico|png|gif|jpg|css|js)$&quot; sessionBackupAsync= &quot;false&quot; sessionBackupTimeout= &quot;100&quot; transcoderFactoryClass=&quot;de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory&quot;/&gt;</span><br></pre></td></tr></table></figure></li></ul></li></ol></li></ol><h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://www.toutiao.com/i6586958402939781645/" target="_blank" rel="noopener">Nginx+Tomcat 配置负载均衡集群</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;Nginx负载均衡策略&quot;&gt;&lt;a href=&quot;#Nginx负载均衡策略&quot; class=&quot;headerlink&quot; title=&quot;Nginx负载均衡策略&quot;&gt;&lt;/a&gt;Nginx负载均衡策略&lt;/h2&gt;&lt;h3 id=&quot;轮询（默认）&quot;&gt;&lt;a href=&quot;#轮询（默认）&quot; cla
+      
+    
+    </summary>
+    
+    
+      <category term="Nginx" scheme="http://blog.shicc.top/tags/Nginx/"/>
+    
+      <category term="负载均衡策略" scheme="http://blog.shicc.top/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AD%96%E7%95%A5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>分布式ID解决方案</title>
+    <link href="http://blog.shicc.top/%E5%88%86%E5%B8%83%E5%BC%8FID%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html"/>
+    <id>http://blog.shicc.top/分布式ID解决方案.html</id>
+    <published>2018-08-06T03:48:40.000Z</published>
+    <updated>2018-12-03T10:19:55.678Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="分布式ID解决方案"><a href="#分布式ID解决方案" class="headerlink" title="分布式ID解决方案"></a>分布式ID解决方案</h1><h3 id="可供选择的分布式ID方案"><a href="#可供选择的分布式ID方案" class="headerlink" title="可供选择的分布式ID方案"></a>可供选择的分布式ID方案</h3><ol><li><p>UUID<br> 优点：  </p><pre><code>- 简单，代码方便- 生成ID性能非常好，基本不会有性能问题- 全球唯一，永不重复</code></pre><p> 缺点：  </p><pre><code>- 没有排序，无法保证趋势递增- UUID存的是字符串，查询效率比较低- UUID 存储空间以及数据传输数据量大</code></pre></li><li><p>基于数据库的自增ID</p></li><li><p>基于 Redis 的自增ID<br>使用Redis的原子操作 INCR和INCRBY来实现<br>比较适合使用Redis来生成每天从0开始的流水号。比如订单号=日期+自增长号<br> 优点：</p><pre><code>- 不依赖于数据库，灵活方便，且性能优于数据库- 数字ID天然排序，对分页或者排序的结果有帮助</code></pre></li><li><p>基于MongoDB的ObjectId</p></li><li><p>Snowflake<br> twitter 开发的一套全局唯一ID生成服务 Snowflake</p><ol><li>41位的时间序列(精确到毫秒，41位的长度可以使用69年)</li><li>10位的机器标识(10为的长度最多支持1024个节点部署)</li><li>12位的计数序号</li></ol></li><li><p>类snowflake算法</p><ol><li><a href="https://github.com/baidu/uid-generator" target="_blank" rel="noopener">百度的uid-generator</a></li><li><a href="https://github.com/zhuzhong/idleaf" target="_blank" rel="noopener">美团Leaf</a></li></ol></li></ol><p>本人比较偏向于基于Redis的方式生成自增ID。现在的项目基本都会引入Reids做缓存中间件，因此不会因为额外的组件。生产环境中的Reids，基本上都基于主从，或者集群可以防止单点故障。<br>同时代码实现也比较简单。比如ID = YYYYMMDD + 自增长号。后台使用两个字段值来作为ID，排序时先根据时间，再根据自增长ID进行排序。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;分布式ID解决方案&quot;&gt;&lt;a href=&quot;#分布式ID解决方案&quot; class=&quot;headerlink&quot; title=&quot;分布式ID解决方案&quot;&gt;&lt;/a&gt;分布式ID解决方案&lt;/h1&gt;&lt;h3 id=&quot;可供选择的分布式ID方案&quot;&gt;&lt;a href=&quot;#可供选择的分布式ID方案&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="分布式" scheme="http://blog.shicc.top/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MessageDigest 使用注意，并发问题</title>
+    <link href="http://blog.shicc.top/MD5%20%E5%A4%9A%E7%BA%BF%E7%A8%8B%E8%AE%A1%E7%AE%97%E9%94%99%E8%AF%AF.html"/>
+    <id>http://blog.shicc.top/MD5 多线程计算错误.html</id>
+    <published>2018-07-11T03:48:40.000Z</published>
+    <updated>2018-12-03T10:19:55.664Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="MessageDigest-使用注意，并发问题"><a href="#MessageDigest-使用注意，并发问题" class="headerlink" title="MessageDigest 使用注意，并发问题"></a>MessageDigest 使用注意，并发问题</h1><p> Message Digest Algorithm MD5（中文名为消息摘要算法第五版）为计算机安全领域广泛使用的一种散列函数，用以提供消息的完整性保护。该算法的文件号为RFC 1321（R.Rivest,MIT Laboratory for Computer Science and RSA Data Security Inc. April 1992）。  </p><h2 id="产生错误原因"><a href="#产生错误原因" class="headerlink" title="产生错误原因"></a>产生错误原因</h2><p>因为这些常用的工具类之前都写好了，用的时候没有多想就直接Copy过来了，请求是并发的，刚刚开始的时候，并发请求较少（1-2）个，没有出现什么问题，后来请求3-4个同时发的时候，服务端偶尔抛出MD5值验证错误的信息，后来翻看了MD5工具类之后才发现，原来这个类写的方式并不支持并发，MessageDigest被声明为成员变量，多线程环境下会共享同一个MessageDigest对象</p><p>MessageDigest源码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Updates the digest using the specified array of bytes.</span><br><span class="line"> *</span><br><span class="line"> * @param input the array of bytes.</span><br><span class="line"> */</span><br><span class="line">public void update(byte[] input) &#123;</span><br><span class="line">    engineUpdate(input, 0, input.length);</span><br><span class="line">    state = IN_PROGRESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>调用了engineUpdate方法，此方法进行一个更新操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Updates the digest using the specified array of bytes, starting at the specified offset.</span><br></pre></td></tr></table></figure></p><p>然后state属性的状态就被改变了，表明当前计算正在处理过程中。  </p><p>state默认属性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private int state = INITIAL;</span><br></pre></td></tr></table></figure></p><p>然后需要调用MessageDigest.digest()方法计算哈希值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Completes the hash computation by performing final operations</span><br><span class="line"> * such as padding. The digest is reset after this call is made.</span><br><span class="line"> *</span><br><span class="line"> * @return the array of bytes for the resulting hash value.</span><br><span class="line"> */</span><br><span class="line">public byte[] digest() &#123;</span><br><span class="line">    /* Resetting is the responsibility of implementors. */</span><br><span class="line">    byte[] result = engineDigest();</span><br><span class="line">    state = INITIAL;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>到这里已经完成了MD5值的计算，state属性恢复初始状态，如果想要重用MessageDigest对象，还需要调用MessageDigest.reset()方法进行重置，以免这次计算数据会对下一次的计算造成影响，从而导致计算结果错误。</p><p>而我所遇到的问题就是，在MessageDigest在多线程的环境下，Thread-1的计算还没有完成的情况下，Thread-2又开始使用该MessageDigest对象进行下一次的计算，Thread-2修改了MessageDigest的状态，Thread-1使用被修改过后的MessageDigest进行计算，从而导致了计算结果错误。</p><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>pom.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;commons-codec&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;commons-codec&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.10&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">byte[] md5Value = DigestUtils.md5(date);</span><br><span class="line"></span><br><span class="line">String md5Value = DigestUtils.md5Hex(date);</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;MessageDigest-使用注意，并发问题&quot;&gt;&lt;a href=&quot;#MessageDigest-使用注意，并发问题&quot; class=&quot;headerlink&quot; title=&quot;MessageDigest 使用注意，并发问题&quot;&gt;&lt;/a&gt;MessageDigest 使用注
+      
+    
+    </summary>
+    
+    
+      <category term="MD5" scheme="http://blog.shicc.top/tags/MD5/"/>
+    
+      <category term="多线程" scheme="http://blog.shicc.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="MessageDigest" scheme="http://blog.shicc.top/tags/MessageDigest/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java 动态代理</title>
+    <link href="http://blog.shicc.top/Java%20%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86.html"/>
+    <id>http://blog.shicc.top/Java 动态代理.html</id>
+    <published>2018-07-04T04:48:40.000Z</published>
+    <updated>2018-12-03T10:19:55.661Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><p>反射的入口是名称为Class的类</p><h2 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h2><h3 id="静态代理"><a href="#静态代理" class="headerlink" title="静态代理"></a>静态代理</h3><h3 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h3><ol><li>Java SDK</li><li>cglib</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    IService realService = new RealService();</span><br><span class="line">    IService proxyService = (IService) Proxy.newProxyInstance(IService.class.getClassLoader(),</span><br><span class="line">            new Class&lt;?&gt;[] &#123; IService.class &#125;, new SimpleInvocationHandler(realService));</span><br><span class="line">    proxyService.sayHello();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="CGLIB-与-Java-SDK-动态代理的区别"><a href="#CGLIB-与-Java-SDK-动态代理的区别" class="headerlink" title="CGLIB 与 Java SDK 动态代理的区别"></a>CGLIB 与 Java SDK 动态代理的区别</h4><p>Java SDK 动态代理局限在于，他只能为接口创建代理，返回的代理对象也只能转换到某个接口类型，如果一个类没有接口，或者希望代理非接口中定义的方法，那就没有办法了。<br>Java SDK 代理面向的是一组接口，它为这些接口创建了一个实现类，接口的具体实现逻辑是通过自定义的InvocationHandler实现的，这个实现是自定义的，也就是说，其背后都不一定有真正被代理的对象，也可能多个实际对象，根据情况动态选择。cglib代理面向的是一个具体的类，它动态创建了一个新类，也继承了改类，重写了其方法。<br>从代理的角度看，Java SDK代理的是对象，需要先有一个实际对象，自定义的InvocationHandler引用该对象，然后创建一个代理类和代理对象，客户端访问的是代理对象，代理对象最后再代用实际对象的方法，cglib代理的是类，创建的对象只有一个。</p><h3 id="动态代理的优点"><a href="#动态代理的优点" class="headerlink" title="动态代理的优点"></a>动态代理的优点</h3><p>使用动态代理可以编写通用的代理逻辑，用于各种类型的被代理对象，而不用每个被代理的类型都创建一个静态代理类。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;反射&quot;&gt;&lt;a href=&quot;#反射&quot; class=&quot;headerlink&quot; title=&quot;反射&quot;&gt;&lt;/a&gt;反射&lt;/h2&gt;&lt;p&gt;反射的入口是名称为Class的类&lt;/p&gt;
+&lt;h2 id=&quot;代理&quot;&gt;&lt;a href=&quot;#代理&quot; class=&quot;headerlink&quot; titl
+      
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://blog.shicc.top/tags/Java/"/>
+    
+      <category term="动态代理" scheme="http://blog.shicc.top/tags/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Cloud Feign</title>
+    <link href="http://blog.shicc.top/Spring%20Cloud%20Feign.html"/>
+    <id>http://blog.shicc.top/Spring Cloud Feign.html</id>
+    <published>2018-07-04T04:48:40.000Z</published>
+    <updated>2018-12-03T10:19:55.667Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Ribbon-配置"><a href="#Ribbon-配置" class="headerlink" title="Ribbon 配置"></a>Ribbon 配置</h2><p>Spring Cloud Feign 的客户端负载均衡是通过 Spring Cloud Ribbon 实现的，所以可以直接通过配置Ribbon客户端的方式来自定义各个服务客户端调用的参数。</p><p>全局<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ribbon.ConnectTimeout=500</span><br><span class="line">ribbon.ReadTimeout=5000</span><br></pre></td></tr></table></figure></p><p>单位毫秒</p><p>指定服务配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;client&gt;.ribbon.key = value</span><br></pre></td></tr></table></figure></p><p><client> == @FeignClient 中的服务名称</client></p><h3 id="Ribbon-重试机制"><a href="#Ribbon-重试机制" class="headerlink" title="Ribbon 重试机制"></a>Ribbon 重试机制</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SERVICE.ribbon.MaxAutoRetries=1</span><br></pre></td></tr></table></figure><p>重试策略先尝试访问首选实例一次，失败后才更换实例方法，更换实例访问的次数通过 ribbon.MaxAutoRetriesNextServer 参数设置。<br><code>MaxAutoRetries</code> 单个实例的最大尝试次数，<code>MaxAutoRetriesNextServer</code>更换实例尝试的最大次数</p><h3 id="TIP"><a href="#TIP" class="headerlink" title="TIP"></a>TIP</h3><p>Ribbon的超时与Hystrix的是超时是两个概念，Hystrix 的是超时时间需要大于Ribbon的超时时间，否则Hystrix命令超时后，该命令直接熔断，重试机制也就没有意义。</p><h2 id="Hystrix-配置"><a href="#Hystrix-配置" class="headerlink" title="Hystrix 配置"></a>Hystrix 配置</h2><p>Hystrix 实现服务降级  </p><p>全局配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds = 5000</span><br></pre></td></tr></table></figure></p><p>单位毫秒</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">feign.hystrix.enabled = false</span><br><span class="line">hystrix.command.defauld.exectuion.timeout.enabled=false</span><br></pre></td></tr></table></figure><p>关闭Feign 客户端的 Hystrix 功能</p><p>指定命令配置<br>采用 <code>hystrix.command.&lt;commandKey&gt;</code> 作为前缀</p><h2 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h2><h3 id="请求压缩"><a href="#请求压缩" class="headerlink" title="请求压缩"></a>请求压缩</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 开启对请求与相应的GZIP压缩，减少通行过程中的性能损耗</span><br><span class="line">feign.compression.request.enabled=true</span><br><span class="line">feign.compression.response.enaled=true</span><br><span class="line"></span><br><span class="line"># 配置内容指定了压缩的请求数据类型，设置请求压缩的大小下限，只有超过这个大小的请求才会对其进行压缩</span><br><span class="line">feign.compression.request.enabled=true</span><br><span class="line">feign.compression.request.mime-types=text/xml,application/xml,application/json</span><br><span class="line">feign.compression.request.min-request-size=2048</span><br></pre></td></tr></table></figure><h2 id="日志配置"><a href="#日志配置" class="headerlink" title="日志配置"></a>日志配置</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;Ribbon-配置&quot;&gt;&lt;a href=&quot;#Ribbon-配置&quot; class=&quot;headerlink&quot; title=&quot;Ribbon 配置&quot;&gt;&lt;/a&gt;Ribbon 配置&lt;/h2&gt;&lt;p&gt;Spring Cloud Feign 的客户端负载均衡是通过 Spring Clou
+      
+    
+    </summary>
+    
+    
+      <category term="Spring Cloud" scheme="http://blog.shicc.top/tags/Spring-Cloud/"/>
+    
+      <category term="Spring Cloud Feign" scheme="http://blog.shicc.top/tags/Spring-Cloud-Feign/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>分表分库</title>
+    <link href="http://blog.shicc.top/%E5%88%86%E8%A1%A8%E5%88%86%E5%BA%93.html"/>
+    <id>http://blog.shicc.top/分表分库.html</id>
+    <published>2018-07-04T04:48:40.000Z</published>
+    <updated>2018-12-03T10:19:55.678Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+      <category term="分表分库" scheme="http://blog.shicc.top/tags/%E5%88%86%E8%A1%A8%E5%88%86%E5%BA%93/"/>
+    
+      <category term="Sharding-JDBC" scheme="http://blog.shicc.top/tags/Sharding-JDBC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Aop 源码学习</title>
+    <link href="http://blog.shicc.top/Spring%20Aop%20%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0.html"/>
+    <id>http://blog.shicc.top/Spring Aop 源码学习.html</id>
+    <published>2018-07-04T03:48:40.000Z</published>
+    <updated>2018-12-03T10:19:55.666Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Spring-Aop-源码学习"><a href="#Spring-Aop-源码学习" class="headerlink" title="Spring Aop 源码学习"></a>Spring Aop 源码学习</h1><h2 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AopNamespaceHandler.java</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Spring-Aop-源码学习&quot;&gt;&lt;a href=&quot;#Spring-Aop-源码学习&quot; class=&quot;headerlink&quot; title=&quot;Spring Aop 源码学习&quot;&gt;&lt;/a&gt;Spring Aop 源码学习&lt;/h1&gt;&lt;h2 id=&quot;入口&quot;&gt;&lt;a href=&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="Spring Aop" scheme="http://blog.shicc.top/tags/Spring-Aop/"/>
+    
+      <category term="Spring Cloud Zipkin" scheme="http://blog.shicc.top/tags/Spring-Cloud-Zipkin/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring Cloud Actuator</title>
+    <link href="http://blog.shicc.top/Spring%20Cloud%20Actuator.html"/>
+    <id>http://blog.shicc.top/Spring Cloud Actuator.html</id>
+    <published>2018-07-04T03:48:40.000Z</published>
+    <updated>2018-12-03T10:19:55.666Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Spring-Cloud-Actuator"><a href="#Spring-Cloud-Actuator" class="headerlink" title="Spring Cloud Actuator"></a>Spring Cloud Actuator</h1><p>为Spring Boot 构建的应用提供一系类用于监控的断点。</p><h2 id="原生断点"><a href="#原生断点" class="headerlink" title="原生断点"></a>原生断点</h2><p><code>spring-boot-starter-actuator</code> 模块中已经实现的一些原生端点</p><ul><li>应用配置类： 获取应用程序中加载的应用配置、环境变量、自动化配置报告等于Spring Boot 应用密切相关的配置类信息。</li><li>度量指标类： 获取应用程序运行过程中用于监控的度量指标，比如内存信息、线程池信息、http 请求统计等</li><li>操作控制类： 提供了对应用的关闭等操作可供您</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Spring-Cloud-Actuator&quot;&gt;&lt;a href=&quot;#Spring-Cloud-Actuator&quot; class=&quot;headerlink&quot; title=&quot;Spring Cloud Actuator&quot;&gt;&lt;/a&gt;Spring Cloud Actuator&lt;/
+      
+    
+    </summary>
+    
+    
+      <category term="Spring Cloud" scheme="http://blog.shicc.top/tags/Spring-Cloud/"/>
+    
+      <category term="Spring Cloud Actuator" scheme="http://blog.shicc.top/tags/Spring-Cloud-Actuator/"/>
+    
+  </entry>
+  
+</feed>
